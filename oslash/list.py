@@ -65,16 +65,7 @@ class List[T](Iterable[T], Sized):
     @classmethod
     def from_iterable(cls, iterable: Iterable[T]) -> List[T]:
         """Create list from iterable."""
-        iterator = iter(iterable)
-
-        def recurse() -> List[T]:
-            try:
-                value = next(iterator)
-            except StopIteration:
-                return cls.empty()
-            return cls.unit(value).append(recurse())
-
-        return cls.empty().append(recurse())
+        pass
 
     @classmethod
     def concat(cls, xs: Iterable[List[T]]) -> List[T]:
@@ -87,7 +78,7 @@ class List[T](Iterable[T], Sized):
         """
 
         def reducer(a: List[T], b: List[T]) -> List[T]:
-            return a + b
+            pass
 
         return reduce(reducer, xs, Nil())
 
@@ -184,24 +175,18 @@ class Cons[T](List[T]):
 
     def null(self) -> bool:
         """Return True if List is empty."""
-        return False
+        pass
 
     def map[U](self, mapper: Callable[[T], U]) -> List[U]:
         """Map a function over a List."""
-        return self.tail().map(mapper).cons(mapper(self.head()))
+        pass
 
     def apply[U](self: Cons[Callable[[T], U]], something: List[T]) -> List[U]:
         """Apply wrapped functions to wrapped values.
 
         Haskell: fs <*> xs = [f x | f <- fs, x <- xs]
         """
-        try:
-            xs = [f(x) for f in self for x in something]
-        except TypeError:
-            # Partial application for curried functions
-            xs = [partial(f, x) for f in self for x in something]  # type: ignore
-
-        return List.from_iterable(xs)  # type: ignore[return-value]
+        pass
 
     def append(self, other: List[T]) -> List[T]:
         """Append other list to this list."""
@@ -316,17 +301,15 @@ class Nil[T](List[T]):
 
     def null(self) -> bool:
         """Return True if List is empty."""
-        return True
+        pass
 
     def map[U](self, mapper: Callable[[T], U]) -> List[U]:
         """Map a function over an empty List."""
-        return Nil()
+        pass
 
     def apply[U](self: Nil[Callable[[T], U]], something: List[T]) -> List[U]:
         """Apply empty list of functions."""
-        # fs <*> xs = [f x | f <- fs, x <- xs]
-        # Empty list produces empty result
-        return Nil()
+        pass
 
     def append(self, other: List[T]) -> List[T]:
         """Append other list to this empty list."""

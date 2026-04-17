@@ -68,8 +68,7 @@ class Right[T, E](Either[T, E]):
 
     def map[U](self, mapper: Callable[[T], U]) -> Either[U, E]:
         """Map a function over the Right value."""
-        result = mapper(self._value)
-        return Right(result)
+        pass
 
     # Applicative Section
     # ===================
@@ -81,15 +80,7 @@ class Right[T, E](Either[T, E]):
 
     def apply[U](self: Right[Callable[[T], U], E], something: Either[T, E]) -> Either[U, E]:
         """Apply a wrapped function to a wrapped value."""
-
-        def mapper(other_value: T) -> U:
-            try:
-                return self._value(other_value)
-            except TypeError:
-                # Partial application for curried functions
-                return partial(self._value, other_value)  # type: ignore
-
-        return something.map(mapper)
+        pass
 
     # Monad Section
     # =============
@@ -138,7 +129,7 @@ class Left[T, E](Either[T, E]):
 
     def map[U](self, mapper: Callable[[T], U]) -> Either[U, E]:
         """Left values are not mapped."""
-        return Left(self._error)
+        pass
 
     # Applicative Section
     # ===================
@@ -150,7 +141,7 @@ class Left[T, E](Either[T, E]):
 
     def apply[U](self: Left[Callable[[T], U], E], something: Either[T, E]) -> Either[U, E]:
         """Left values cannot apply."""
-        return Left(self._error)
+        pass
 
     # Monad Section
     # =============

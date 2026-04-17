@@ -139,16 +139,12 @@ def do(*lines: Monad[Any] | MonadicLet | Callable[[Any], Monad[Any]]) -> Monad[A
             self.names: set[str] = set()
 
         def assign(self, k: str, v: Any) -> None:  # Any: Dynamic attribute values
-            self.names.add(k)
-            setattr(self, k, v)
+            pass
 
         # simulate lexical closure property for env attrs
         #   - free_vars: set of names that "fall in" from a surrounding lexical scope
         def close_over(self, free_vars: set[str]) -> None:
-            names_to_clear = {k for k in self.names if k not in free_vars}
-            for k in names_to_clear:
-                delattr(self, k)
-            self.names = free_vars.copy()
+            pass
 
     # stuff used inside the eval
     e = Env()
@@ -156,7 +152,7 @@ def do(*lines: Monad[Any] | MonadicLet | Callable[[Any], Monad[Any]]) -> Monad[A
     def begin(*exprs: Any) -> Any:  # Any: args eagerly evaluated by Python
         # begin(e1, e2, ..., en):
         #   perform side effects e1, e2, ..., e[n-1], return the value of en.
-        return exprs[-1]
+        pass
 
     all_code = ""
     names: set[str] = set()  # names seen so far (working line by line, so textually!)

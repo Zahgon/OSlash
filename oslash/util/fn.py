@@ -64,7 +64,7 @@ def compose[T](*funcs: Callable[[Any], Any]) -> Callable[[Any], Any]:
     """
 
     def _compose(source: T) -> T:
-        return reduce(lambda acc, f: f(acc), funcs[::-1], source)  # type: ignore
+        pass
 
     return _compose
 

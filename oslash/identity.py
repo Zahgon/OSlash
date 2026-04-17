@@ -26,8 +26,7 @@ class Identity[T]:
 
     def map[U](self, mapper: Callable[[T], U]) -> Identity[U]:
         """Map a function over wrapped values."""
-        result = mapper(self._value)
-        return Identity(result)
+        pass
 
     def bind[U](self, func: Callable[[T], Identity[U]]) -> Identity[U]:
         """Bind a monadic function."""
@@ -40,15 +39,7 @@ class Identity[T]:
 
     def apply[U](self: Identity[Callable[[T], U]], something: Identity[T]) -> Identity[U]:
         """Apply a wrapped function to a wrapped value."""
-
-        def mapper(other_value: T) -> U:
-            try:
-                return self._value(other_value)
-            except TypeError:
-                # Partial application for curried functions
-                return partial(self._value, other_value)  # type: ignore
-
-        return something.map(mapper)
+        pass
 
     def run(self) -> T:
         """Extract the value from the Identity."""

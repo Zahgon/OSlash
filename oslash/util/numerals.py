@@ -25,7 +25,7 @@ def identity[T](x: T) -> T:
 
 def self_apply[T](s: Callable[[T], T]) -> T:
     """Self-application combinator."""
-    return s(s)  # type: ignore[arg-type]
+    pass
 
 
 # Selectors
@@ -42,19 +42,19 @@ def select_second[T](first: T) -> Callable[[T], T]:
 # Pair constructor
 def make_pair[T](first: T) -> Callable[[T], Callable[[ChurchBoolean[T]], T]]:
     """Make a pair."""
-    return lambda second: lambda func: func(first)(second)
+    pass
 
 
 # Application
 def apply[T, U](func: Callable[[T], U]) -> Callable[[T], U]:
     """Apply a function to an argument."""
-    return lambda arg: func(arg)
+    pass
 
 
 # Conditional
 def cond[T](e1: T) -> Callable[[T], Callable[[ChurchBoolean[T]], T]]:
     """Conditional expression."""
-    return lambda e2: lambda c: c(e1)(e2)
+    pass
 
 
 # Booleans
@@ -77,17 +77,17 @@ def iff[T](c: ChurchBoolean[T], a: T, b: T) -> T:
 # Boolean operations
 def not_[T](x: ChurchBoolean[T]) -> ChurchBoolean[T]:
     """Logical NOT."""
-    return cond(false)(true)(x)  # type: ignore[arg-type,return-value]
+    pass
 
 
 def and_[T](x: ChurchBoolean[T]) -> Callable[[ChurchBoolean[T]], ChurchBoolean[T]]:
     """Logical AND."""
-    return lambda y: x(y)(false)  # type: ignore[arg-type,return-value]
+    pass
 
 
 def or_[T](x: ChurchBoolean[T]) -> Callable[[ChurchBoolean[T]], ChurchBoolean[T]]:
     """Logical OR."""
-    return lambda y: x(true)(y)  # type: ignore[arg-type,return-value]
+    pass
 
 
 # Church numerals
@@ -114,13 +114,13 @@ three: ChurchNumeral[int] = succ(two)
 
 def is_zero[T](n: ChurchNumeral[T]) -> ChurchBoolean[T]:
     """Test if Church numeral is zero."""
-    return n(select_first)  # type: ignore[arg-type,return-value]
+    pass
 
 
 # Convert Church numeral to Python int
 def to_int(n: ChurchNumeral[int]) -> int:
     """Convert Church numeral to Python int."""
-    return n(lambda x: x + 1)(0)
+    pass
 
 
 def printl(n: ChurchNumeral[int]) -> int:

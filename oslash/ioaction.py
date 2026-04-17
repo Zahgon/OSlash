@@ -82,7 +82,7 @@ class Return[T](IO[T]):
 
     def map[U](self, func: Callable[[T], U]) -> IO[U]:
         """Map function over returned value."""
-        return Return(func(self._value))
+        pass
 
     def bind[U](self, func: Callable[[T], IO[U]]) -> IO[U]:
         """IO a -> (a -> IO b) -> IO b."""
@@ -113,8 +113,7 @@ class Put[T](IO[T]):
 
     def map[U](self, func: Callable[[T], U]) -> IO[U]:
         """Put s (fmap f io)"""
-        text, action = self._value
-        return Put(text, action.map(func))
+        pass
 
     def run(self, world: int) -> T:
         """Run IO action"""
@@ -146,8 +145,7 @@ class Get[T](IO[T]):
 
     def map[U](self, func: Callable[[T], U]) -> IO[U]:
         r"""Get (\s -> fmap f (g s))"""
-        g = self._fn
-        return Get(lambda s: g(s).map(func))
+        pass
 
     def run(self, world: int) -> T:
         """Run IO Action"""
@@ -183,9 +181,7 @@ class ReadFile(IO[str]):
 
     def map[U](self, func: Callable[[str], U]) -> IO[U]:
         r"""Get (\s -> fmap f (g s))"""
-        _, g = self._value
-        # IO: Flexible IO type for file reading
-        return Get(lambda s: g(s).map(func))  # type: ignore
+        pass
 
     def run(self, world: int) -> str:
         """Run IO Action"""

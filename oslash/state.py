@@ -41,11 +41,7 @@ class State[T, S]:
 
     def map[U](self, mapper: Callable[[T], U]) -> State[U, S]:
         """Map a function over the State value."""
-
-        def transform(a: T, state: S) -> tuple[U, S]:
-            return mapper(a), state
-
-        return State(lambda state: transform(*self.run(state)))
+        pass
 
     def bind[U](self, fn: Callable[[T], State[U, S]]) -> State[U, S]:
         r"""Bind a monadic function.
@@ -65,7 +61,7 @@ class State[T, S]:
 
         get = state $ \s -> (s, s)
         """
-        return State(lambda state: (state, state))
+        pass
 
     @classmethod
     def put(cls, new_state: S) -> State[tuple[()], S]:
@@ -73,7 +69,7 @@ class State[T, S]:
 
         put newState = state $ \s -> ((), newState)
         """
-        return State(lambda state: (Unit, new_state))
+        pass
 
     def run(self, state: S) -> tuple[T, S]:
         """Return wrapped state computation.

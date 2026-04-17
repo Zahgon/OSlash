@@ -72,7 +72,7 @@ class Maybe[T]:
         """
 
         def reducer(a: Maybe[T], b: Maybe[T]) -> Maybe[T]:
-            return a + b
+            pass
 
         return reduce(reducer, xs, cls.empty())
 
@@ -126,8 +126,7 @@ class Just[T](Maybe[T]):
 
     def map[U](self, mapper: Callable[[T], U]) -> Maybe[U]:
         """fmap f (Just x) = Just (f x)"""
-        result = mapper(self._value)
-        return Just(result)
+        pass
 
     # Applicative Section
     # ===================
@@ -139,15 +138,7 @@ class Just[T](Maybe[T]):
 
     def apply[U](self: Just[Callable[[T], U]], something: Maybe[T]) -> Maybe[U]:
         """Apply a wrapped function to a wrapped value."""
-
-        def mapper(other_value: T) -> U:
-            try:
-                return self._value(other_value)
-            except TypeError:
-                # Partial application for curried functions
-                return partial(self._value, other_value)  # type: ignore
-
-        return something.map(mapper)
+        pass
 
     # Monad Section
     # =============
@@ -196,11 +187,11 @@ class Just[T](Maybe[T]):
 
     def is_just(self) -> bool:
         """Check if this is a Just value."""
-        return True
+        pass
 
     def is_nothing(self) -> bool:
         """Check if this is Nothing."""
-        return False
+        pass
 
     # Operator Overloads Section
     # ==========================
@@ -249,7 +240,7 @@ class Nothing[T](Maybe[T]):
 
     def map[U](self, mapper: Callable[[T], U]) -> Maybe[U]:
         """fmap f Nothing = Nothing"""
-        return Nothing()
+        pass
 
     # Applicative Section
     # ===================
@@ -261,7 +252,7 @@ class Nothing[T](Maybe[T]):
 
     def apply[U](self: Nothing[Callable[[T], U]], something: Maybe[T]) -> Maybe[U]:
         """Nothing <*> _ = Nothing"""
-        return Nothing()
+        pass
 
     # Monad Section
     # =============
@@ -310,11 +301,11 @@ class Nothing[T](Maybe[T]):
 
     def is_just(self) -> bool:
         """Check if this is a Just value."""
-        return False
+        pass
 
     def is_nothing(self) -> bool:
         """Check if this is Nothing."""
-        return True
+        pass
 
     # Operator Overloads Section
     # ==========================

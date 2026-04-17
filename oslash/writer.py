@@ -34,9 +34,7 @@ class Writer[T, Log]:
         Haskell:
         fmap f m = Writer $ let (a, w) = runWriter m in (f a, w)
         """
-        a, w = self.run()
-        b, w_ = func((a, w))
-        return Writer(b, w_)
+        pass
 
     def bind[U](self, func: Callable[[T], Writer[U, Log]]) -> Writer[U, Log]:
         """Flat is better than nested.
@@ -77,10 +75,7 @@ class Writer[T, Log]:
 
         Helper function to apply a function to a value with a log tuple.
         """
-        value, log = a
-        new, entry = func(value)
-        # Log: Monoid append operation
-        return new, log + entry  # type: ignore
+        pass
 
     @classmethod
     def create(cls, class_name: str, monoid_type: type[Monoid[Log]] | type[str] = str) -> type[Writer[T, Log]]:
@@ -124,8 +119,7 @@ class MonadWriter[Log](Writer[None, Log]):
     @classmethod
     def tell(cls, log: Log) -> MonadWriter[Log]:
         """Log a value without returning a result."""
-        # None: tell returns no meaningful value
-        return cls(None, log)  # type: ignore
+        pass
 
 
 # Convenience: Pre-created StringWriter

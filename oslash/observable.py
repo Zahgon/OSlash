@@ -38,15 +38,14 @@ class Observable[T]:
     @classmethod
     def just(cls, x: T) -> Observable[T]:
         """Alias for unit."""
-        return cls.unit(x)
+        pass
 
     def map[U](self, mapper: Callable[[T], U]) -> Observable[U]:
         r"""Map a function over an observable.
 
         Haskell: fmap f m = Cont $ \c -> runCont m (c . f)
         """
-        source = self
-        return Observable(lambda on_next: source.subscribe(compose(on_next, mapper)))
+        pass
 
     def bind[U](self, fn: Callable[[T], Observable[U]]) -> Observable[U]:
         r"""Chain continuation passing functions.
@@ -60,16 +59,7 @@ class Observable[T]:
 
     def filter(self, predicate: Callable[[T], bool]) -> Observable[T]:
         """Filter the on_next continuation functions"""
-        source = self
-
-        def subscribe(on_next: Callable[[T], None]) -> object:
-            def _next(x: T) -> None:
-                if predicate(x):
-                    on_next(x)
-
-            return source.subscribe(_next)
-
-        return Observable(subscribe)
+        pass
 
     @staticmethod
     def call_cc[T2, U](fn: Callable[[Callable[[T2], Observable[U]]], Observable[T2]]) -> Observable[T2]:
@@ -77,11 +67,7 @@ class Observable[T]:
 
         Haskell: callCC f = Cont $ \c -> runCont (f (\a -> Cont $ \_ -> c a )) c
         """
-
-        def subscribe(on_next: Callable[[T2], None]) -> object:
-            return fn(lambda a: Observable(lambda _: on_next(a))).subscribe(on_next)
-
-        return Observable(subscribe)
+        pass
 
     def subscribe(self, on_next: Callable[[T], None]) -> object:
         """Subscribe to the observable with an on_next callback."""

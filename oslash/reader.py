@@ -44,11 +44,7 @@ class Reader[Env, T]:
         fmap f m = Reader $ \r -> f (runReader m r).
         fmap f g = (\x -> f (g x))
         """
-
-        def compose(x: Env) -> U:
-            return fn(self.run(x))
-
-        return Reader(compose)
+        pass
 
     def bind[U](self, fn: Callable[[T], Reader[Env, U]]) -> Reader[Env, U]:
         r"""Bind a monadic function to the Reader.
@@ -74,17 +70,7 @@ class Reader[Env, T]:
         function from the first Reader and then maps it over the second
         one (composes the two functions).
         """
-
-        def comp(env: Env) -> U:
-            func: Callable[[T], U] = self.run(env)
-            value: T = something.run(env)
-            try:
-                return func(value)
-            except TypeError:
-                # Partial application for curried functions
-                return partial(func, value)  # type: ignore
-
-        return Reader(comp)
+        pass
 
     def run(self, env: Env) -> T:
         """Run reader in given environment.
@@ -120,7 +106,7 @@ class MonadReader[Env, T](Reader[Env, T]):
         Provides a way to easily access the environment.
         ask lets us read the environment and then play with it
         """
-        return Reader(lambda x: x)
+        pass
 
     @classmethod
     def asks(cls, fn: Callable[[Env], T]) -> Reader[Env, T]:
@@ -134,14 +120,14 @@ class MonadReader[Env, T](Reader[Env, T]):
 
         asks sel = ask >>= return . sel
         """
-        return cls.ask().bind(lambda env: cls.unit(fn(env)))
+        pass
 
     def local(self, fn: Callable[[Env], Env]) -> Reader[Env, T]:
         r"""local transforms the environment a Reader sees.
 
         local f c = Reader $ \e -> runReader c (f e)
         """
-        return Reader(lambda env: self.run(fn(env)))
+        pass
 
 
 # Type assertions for runtime checking

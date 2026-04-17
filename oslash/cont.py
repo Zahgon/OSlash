@@ -45,11 +45,7 @@ class Cont[T, R]:
 
         Haskell: fmap f m = Cont $ \c -> runCont m (c . f)
         """
-
-        def comp(cont: Callable[[U], R]) -> R:
-            return self.run(compose(cont, fn))
-
-        return Cont(comp)
+        pass
 
     def bind[U](self, fn: Callable[[T], Cont[U, R]]) -> Cont[U, R]:
         r"""Chain continuation passing functions.
@@ -64,7 +60,7 @@ class Cont[T, R]:
 
         Haskell: callCC f = Cont $ \c -> runCont (f (\a -> Cont $ \_ -> c a )) c
         """
-        return Cont(lambda c: fn(lambda a: Cont(lambda _: c(a))).run(c))  # type: ignore[arg-type]
+        pass
 
     def run(self, cont: Callable[[T], R]) -> R:
         """Run the continuation with the given continuation function."""
